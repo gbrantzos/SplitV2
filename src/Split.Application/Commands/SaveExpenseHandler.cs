@@ -23,12 +23,12 @@ namespace Split.Application.Commands
         public override async Task<Result<bool>> Handle(SaveExpense request, CancellationToken cancellationToken)
         {
             var expense = request.Id > 0
-                ? await _dbContext.Expenses.FindAsync(new[] {request.Id}, cancellationToken)
+                ? await _dbContext.Expenses.FindAsync(new object[] {request.Id}, cancellationToken)
                 : new Expense();
 
             expense.Description = request.Description;
             expense.Category = request.Category;
-            expense.Amount = request.Amount;
+            expense.Value = Money.InEuro(request.Amount);
             expense.ForOwner = request.ForOwner;
 
             if (expense.IsNew)

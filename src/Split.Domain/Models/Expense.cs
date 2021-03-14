@@ -7,7 +7,7 @@ namespace Split.Domain.Models
     {
         public string Description { get; set; }
         public string Category { get; set; }
-        public decimal Amount { get; set; }
+        public Money Value { get; set; }
         public DateTime EntryDate { get; set; }
         public bool ForOwner { get; set; }
         public DateTime? PaidAt { get; set; }

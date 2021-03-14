@@ -35,7 +35,7 @@ namespace Split.Infrastructure.Persistence.Configuration
                 .HasColumnName(SplitDbConstants.RowVersion)
                 .IsConcurrencyToken();
             
-            AddDeclaredFields(builder);
+            // AddDeclaredFields(builder);
         }
 
         private void AddDeclaredFields(EntityTypeBuilder<TEntity> builder)

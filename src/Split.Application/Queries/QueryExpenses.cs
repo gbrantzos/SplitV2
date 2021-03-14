@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MediatR;
 using Split.Application.Base;
 using Split.Domain.Models;
 

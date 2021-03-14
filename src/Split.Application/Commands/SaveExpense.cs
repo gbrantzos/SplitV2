@@ -10,5 +10,7 @@ namespace Split.Application.Commands
         public string Category { get; set; }
         public decimal Amount { get; set; }
         public bool ForOwner { get; set; }
+
+        public override string ToString() => $"{Description}, {Amount}";
     }
 }

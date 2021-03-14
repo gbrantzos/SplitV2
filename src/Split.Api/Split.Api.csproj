@@ -4,6 +4,16 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile>bin\Debug\Split.Api.xml</DocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\Split.Api.xml</DocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />
@@ -14,9 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Split.Application\Split.Application.csproj" />
-      <ProjectReference Include="..\Split.Domain\Split.Domain.csproj" />
-      <ProjectReference Include="..\Split.Infrastructure\Split.Infrastructure.csproj" />
+        <ProjectReference Include="..\Split.Application\Split.Application.csproj" />
+        <ProjectReference Include="..\Split.Domain\Split.Domain.csproj" />
+        <ProjectReference Include="..\Split.Infrastructure\Split.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
