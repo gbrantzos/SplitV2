@@ -9,7 +9,7 @@ using Split.Domain.Models;
 
 namespace Split.Application.Commands
 {
-    public class SaveExpenseHandler : BaseHandler<SaveExpense>
+    public class SaveExpenseHandler : RequestHandler<SaveExpense>
     {
         private readonly ISplitDbContext _dbContext;
         private readonly ILogger<SaveExpenseHandler> _logger;
@@ -20,7 +20,8 @@ namespace Split.Application.Commands
             _logger = logger;
         }
 
-        public override async Task<Result<bool>> Handle(SaveExpense request, CancellationToken cancellationToken)
+        protected override async Task<Result<bool>> HandleInternal(SaveExpense request,
+            CancellationToken cancellationToken)
         {
             var expense = request.Id > 0
                 ? await _dbContext.Expenses.FindAsync(new object[] {request.Id}, cancellationToken)

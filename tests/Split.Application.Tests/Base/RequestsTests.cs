@@ -17,10 +17,10 @@ namespace Split.Application.Tests.Base
                     var baseType = t.BaseType;
                     return !t.IsAbstract &&
                            !t.IsInterface &&
-                           (baseType == typeof(BaseRequest) || (baseType != null &&
+                           (baseType == typeof(Request) || (baseType != null &&
                                                                 baseType.IsGenericType &&
                                                                 baseType.GetGenericTypeDefinition() ==
-                                                                typeof(BaseRequest<>)));
+                                                                typeof(Request<>)));
                 })
                 .ToList();
 

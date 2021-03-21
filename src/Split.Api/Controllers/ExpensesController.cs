@@ -30,7 +30,7 @@ namespace Split.Api.Controllers
         public async Task<ExpensesList> Get()
         {
             _logger.LogDebug("ExpenseController :: Get expenses");
-            var result = await _mediator.Send(new QueryExpenses());
+            var result = await _mediator.Send(new QueryExpenses {IncludeAll = true});
             return result.Data;
         }
 

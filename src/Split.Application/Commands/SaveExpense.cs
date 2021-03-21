@@ -2,7 +2,7 @@
 
 namespace Split.Application.Commands
 {
-    public class SaveExpense : BaseRequest
+    public class SaveExpense : Request
     {
         public int Id { get; set; }
         public int RowVersion { get; set; }

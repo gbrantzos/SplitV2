@@ -14,9 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Infrastructure", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Common", "src\Split.Common\Split.Common.csproj", "{A673BC69-E359-458A-A0F0-5D5659349BCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Application.Tests", "Split.Application.Tests\Split.Application.Tests.csproj", "{27289AD0-E51C-418D-A974-42692CA5E2F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Application.Tests", "tests\Split.Application.Tests\Split.Application.Tests.csproj", "{27289AD0-E51C-418D-A974-42692CA5E2F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Domain.Tests", "Split.Domain.Tests\Split.Domain.Tests.csproj", "{DA646BA2-4E74-4709-B2F2-88A5C80A712C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Domain.Tests", "tests\Split.Domain.Tests\Split.Domain.Tests.csproj", "{DA646BA2-4E74-4709-B2F2-88A5C80A712C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
