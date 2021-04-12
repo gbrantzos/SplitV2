@@ -1,10 +1,9 @@
 ﻿using System;
-using Split.Application.Base;
-using Split.Application.ViewModels;
+using System.Collections.Generic;
 
-namespace Split.Application.Commands
+namespace Split.Application.ViewModels
 {
-    public class SaveExpense : Request<ExpenseViewModel>
+    public class ExpenseViewModel
     {
         public int Id { get; init; }
         public int RowVersion { get; init; }
@@ -13,7 +12,10 @@ namespace Split.Application.Commands
         public decimal Value { get; init; }
         public DateTime EntryDate { get; init; }
         public bool ForOwner { get; init; }
-
-        public override string ToString() => $"{Description}, {Value}";
+    }
+    
+    public class ExpenseListViewModel
+    {
+        public IEnumerable<ExpenseViewModel> Items { get; init; }
     }
 }

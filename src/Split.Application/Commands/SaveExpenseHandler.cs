@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Split.Application.Base;
+using Split.Application.ViewModels;
 using Split.Domain.Models;
 
 namespace Split.Application.Commands
 {
-    public class SaveExpenseHandler : RequestHandler<SaveExpense>
+    public class SaveExpenseHandler : RequestHandler<SaveExpense, ExpenseViewModel>
     {
         private readonly ISplitDbContext _dbContext;
         private readonly ILogger<SaveExpenseHandler> _logger;
@@ -20,7 +20,7 @@ namespace Split.Application.Commands
             _logger = logger;
         }
 
-        protected override async Task<Result<bool>> HandleInternal(SaveExpense request,
+        protected override async Task<Result<ExpenseViewModel>> HandleInternal(SaveExpense request,
             CancellationToken cancellationToken)
         {
             var expense = request.Id > 0
@@ -29,12 +29,12 @@ namespace Split.Application.Commands
 
             expense.Description = request.Description;
             expense.Category = request.Category;
-            expense.Value = Money.InEuro(request.Amount);
+            expense.Value = Money.InEuro(request.Value);
             expense.ForOwner = request.ForOwner;
-
+            expense.EntryDate = request.EntryDate;
+            
             if (expense.IsNew)
             {
-                expense.EntryDate = DateTime.Now.Date;
                 _dbContext.Expenses.Add(expense);
             }
             else
@@ -45,11 +45,11 @@ namespace Split.Application.Commands
             try
             {
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return true;
+                return expense.ToViewModel();
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                var entry = ex.Entries.First();
+                var entry = ex.Entries[0];
                 _logger.LogError(ex, "Concurrency conflict on table {Table}", entry.Entity.GetType().Name);
 
                 return Result.Failure(ex.Message);

@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Split.Application.Commands;
 using Split.Application.Queries;
+using Split.Application.ViewModels;
 
-namespace Split.Api.Controllers
+namespace Split.WebApi.Controllers
 {
     /// <summary>
     /// Expenses controller
     /// </summary>
-    [ApiController, Route("[Controller]")]
+    [ApiController, Route("api/[controller]")]
     public class ExpensesController : ControllerBase
     {
         private readonly ILogger<ExpensesController> _logger;
@@ -27,7 +28,7 @@ namespace Split.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ExpensesList> Get()
+        public async Task<ExpenseListViewModel> Get()
         {
             _logger.LogDebug("ExpenseController :: Get expenses");
             var result = await _mediator.Send(new QueryExpenses {IncludeAll = true});
@@ -54,11 +55,11 @@ namespace Split.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Save(SaveExpense request)
+        public async Task<ActionResult> Save(ExpenseViewModel request)
         {
             _logger.LogDebug("ExpenseController :: Save expense");
-            var result = await _mediator.Send(request);
-            return result.Failed ? BadRequest(result.Message) : Ok();
+            var result = await _mediator.Send(request.ToCommand());
+            return result.Failed ? BadRequest(result.Message) : Ok(result.Data);
         }
     }
 }

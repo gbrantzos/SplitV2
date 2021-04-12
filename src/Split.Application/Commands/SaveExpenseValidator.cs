@@ -9,9 +9,9 @@ namespace Split.Application.Commands
             RuleFor(m => m.Description)
                 .NotEmpty()
                 .WithMessage($"{nameof(SaveExpense.Description)} cannot be null or empty");
-            RuleFor(m => m.Amount)
+            RuleFor(m => m.Value)
                 .GreaterThan(0)
-                .WithMessage($"{nameof(SaveExpense.Amount)} must be greater than zero");
+                .WithMessage($"{nameof(SaveExpense.Value)} must be greater than zero");
         }
     }
 }

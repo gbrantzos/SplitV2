@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{45589667
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Domain", "src\Split.Domain\Split.Domain.csproj", "{6B4AE87F-B425-40F8-A75E-523C653629AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Api", "src\Split.Api\Split.Api.csproj", "{94FB9ED4-17E4-4617-8F22-6B8063EFE8FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.WebApi", "src\Split.WebApi\Split.WebApi.csproj", "{94FB9ED4-17E4-4617-8F22-6B8063EFE8FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Split.Application", "src\Split.Application\Split.Application.csproj", "{2F40B590-F118-4B4D-B712-B5EE49BF00FE}"
 EndProject

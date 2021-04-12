@@ -3,17 +3,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Split.Application.Base;
+using Split.Application.ViewModels;
 
 namespace Split.Application.Queries
 {
-    public class QueryExpensesHandler : RequestHandler<QueryExpenses, ExpensesList>
+    public class QueryExpensesHandler : RequestHandler<QueryExpenses, ExpenseListViewModel>
     {
         private readonly ISplitDbContext _dbContext;
 
         public QueryExpensesHandler(ISplitDbContext dbContext) 
             => _dbContext = dbContext;
 
-        protected override async Task<Result<ExpensesList>> HandleInternal(QueryExpenses request,
+        protected override async Task<Result<ExpenseListViewModel>> HandleInternal(QueryExpenses request,
             CancellationToken cancellationToken)
         {
             var data = await _dbContext
@@ -21,18 +22,9 @@ namespace Split.Application.Queries
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
 
-            return new ExpensesList()
+            return new ExpenseListViewModel
             {
-                Items = data.Select(e => new ExpenseItem
-                {
-                    Id = e.Id,
-                    RowVersion = e.RowVersion,
-                    Description = e.Description,
-                    Category = e.Category,
-                    EntryDate = e.EntryDate,
-                    ForOwner = e.ForOwner,
-                    Value = e.Value.Amount
-                })
+                Items = data.Select(e => e.ToViewModel())
             };
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Prometheus;
 
-namespace Split.Api
+namespace Split.WebApi
 {
     public class Startup
     {
@@ -27,6 +27,15 @@ namespace Split.Api
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            
+            // Add Cors
+            services.AddCors(o => o.AddPolicy("AllOrigins", builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,9 +47,12 @@ namespace Split.Api
                 app.UseSwaggerUI(c =>
                 {
                     c.RoutePrefix = "docs";
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Split.Api v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Split.WebApi v1");
                 });
             }
+            
+            // Enable Cors
+            app.UseCors("AllOrigins");
 
             app.UseHttpsRedirection();
             app.UseRouting();
