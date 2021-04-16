@@ -61,5 +61,29 @@ namespace Split.WebApi.Controllers
             var result = await _mediator.Send(request.ToCommand());
             return result.Failed ? BadRequest(result.Message) : Ok(result.Data);
         }
+
+        /// <summary>
+        /// Delete an expense.
+        /// </summary>
+        /// <remarks>
+        /// ## Sample request:
+        ///
+        ///     DELETE /Expenses
+        ///     {
+        ///         "id": 12,
+        ///         "rowVersion": 2
+        ///     }
+        ///
+        /// When deleting, you must provide `rowVersion` value for optimistic concurrency. 
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<ActionResult> Delete(DeleteExpense request)
+        {
+            _logger.LogDebug("ExpenseController :: Delete expense");
+            var result = await _mediator.Send(request);
+            return result.Failed ? BadRequest(result.Message) : Ok(result.Data);
+        }
     }
 }
