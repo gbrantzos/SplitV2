@@ -11,7 +11,7 @@ namespace Split.Application.Queries
     {
         private readonly ISplitDbContext _dbContext;
 
-        public QueryExpensesHandler(ISplitDbContext dbContext) 
+        public QueryExpensesHandler(ISplitDbContext dbContext)
             => _dbContext = dbContext;
 
         protected override async Task<Result<ExpenseListViewModel>> HandleInternal(QueryExpenses request,

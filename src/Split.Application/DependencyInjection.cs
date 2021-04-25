@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Split.Application.Base;
 using Split.Application.Base.Pipeline;
 
 namespace Split.Application

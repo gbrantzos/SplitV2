@@ -61,8 +61,9 @@ namespace Split.WebApi
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddApplicationServices();
-                    services.AddPersistenceServices(context.Configuration);
+                    services
+                        .AddApplicationServices()
+                        .AddPersistenceServices(context.Configuration);
                 })
                 .ConfigureLogging(logging =>
                 {

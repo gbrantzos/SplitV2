@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Split.Api": {
+    "Split.WebApi": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": false,
