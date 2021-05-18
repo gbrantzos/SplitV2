@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Data.Common;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Split.Application;
 using Split.Domain.Base;
 using Split.Domain.Models;
+using Split.Domain.Repositories;
 
 namespace Split.Infrastructure.Persistence
 {
-    public class SplitDbContext : DbContext, ISplitDbContext
+    public class SplitDbContext : DbContext, IDbConnectionProvider
     {
         public DbSet<Expense> Expenses { get; protected set; }
 
@@ -29,7 +30,7 @@ namespace Split.Infrastructure.Persistence
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        public string DatabaseSchema => Database.GenerateCreateScript();
+        // public string DatabaseSchema => Database.GenerateCreateScript();
 
         private void UpdateCommonColumns()
         {
@@ -49,16 +50,13 @@ namespace Split.Infrastructure.Persistence
                 // Proper ROW_VERSION number for modified entries
                 if (entry.State == EntityState.Modified)
                 {
-                    // Force original value of ROW_VERSION to be the value of the request
-                    // This way the proper where clause will be constructed.
-                    entry.Property(nameof(BaseEntity.RowVersion)).OriginalValue =
-                        entry.Property(nameof(BaseEntity.RowVersion)).CurrentValue;
-
                     // Increase value of ROW_VERSION by 1
                     entry.Property(nameof(BaseEntity.RowVersion)).CurrentValue =
                         (int) entry.Property(nameof(BaseEntity.RowVersion)).CurrentValue + 1;
                 }
             }
         }
+
+        public DbConnection Get() => Database.GetDbConnection();
     }
 }

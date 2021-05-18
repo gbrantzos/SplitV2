@@ -1,28 +1,34 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Split.Application.Base;
+using Split.Domain.Repositories;
 
 namespace Split.Application.Commands
 {
     public class DeleteExpenseHandler : RequestHandler<DeleteExpense>
     {
-        private readonly ISplitDbContext _dbContext;
+        private readonly IExpenseRepository _repository;
 
-        public DeleteExpenseHandler(ISplitDbContext dbContext) => _dbContext = dbContext;
+        public DeleteExpenseHandler(IExpenseRepository repository) => _repository = repository;
 
         protected override async Task<Result<bool>> HandleInternal(DeleteExpense request, CancellationToken cancellationToken)
         {
-            var expense = await _dbContext
-                .Expenses
-                .FirstOrDefaultAsync(ex => ex.Id == request.Id && ex.RowVersion == request.RowVersion,
-                    cancellationToken);
-            if (expense == null)
-                return Result.Failure($"Could not find expense with ID {request.Id}");
+            try
+            {
+                var expense = await _repository.GetById(request.Id, cancellationToken);
+                if (expense == null)
+                    return Result.Failure("Expense not found! [ID: {request.Id} - Version: {request.RowVersion}]");
+                if (expense.RowVersion != request.RowVersion)
+                    return Result.Failure($"Entity changed by other user/process! [ID: {request.Id} - Version: {request.RowVersion}]");
 
-            _dbContext.Expenses.Remove(expense);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+                await _repository.Delete(expense, cancellationToken);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return Result.Failure($"Could not delete expense with ID {request.Id}\\r\\n{e.Message}");
+            }
         }
     }
 }
