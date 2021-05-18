@@ -23,6 +23,7 @@ namespace Split.WebApi
                 var logger = CreateNLogLogger();
                 logger.Info("Create Split host and run...");
 
+                Mappings.Configure();
                 CreateHostBuilder(args)
                     .Build()
                     .Run();
