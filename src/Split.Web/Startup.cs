@@ -49,7 +49,7 @@ namespace Split.Web
                 app.UseSwaggerUI(c =>
                 {
                     c.RoutePrefix = "docs";
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Split.WebApi v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Split.Web v1");
                 });
             }
             
