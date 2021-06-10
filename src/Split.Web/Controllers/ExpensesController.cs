@@ -6,7 +6,7 @@ using Split.Application.Commands;
 using Split.Application.Queries;
 using Split.Application.ViewModels;
 
-namespace Split.WebApi.Controllers
+namespace Split.Web.Controllers
 {
     /// <summary>
     /// Expenses controller

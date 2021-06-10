@@ -10,7 +10,7 @@ using NLog.Web;
 using Split.Application;
 using Split.Infrastructure;
 
-namespace Split.WebApi
+namespace Split.Web
 {
     public static class Program
     {
