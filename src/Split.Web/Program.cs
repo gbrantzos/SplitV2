@@ -23,11 +23,10 @@ namespace Split.Web
                 var logger = CreateNLogLogger();
                 logger.Info("Create Split host and run...");
 
-                Mappings.Configure();
                 CreateHostBuilder(args)
                     .Build()
                     .Run();
-                
+
                 logger.Info("Split host terminated.");
             }
             catch (Exception ex)

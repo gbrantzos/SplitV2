@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +20,25 @@ namespace Split.Infrastructure.Persistence.Repositories
 
         public async Task<Expense> GetById(int id, CancellationToken cancellationToken = default)
         {
-            var expense = await _dbContext.Expenses.FindAsync(new object[] {id}, cancellationToken);
+            var expense = await _dbContext.Expenses.FindAsync(new object[] { id }, cancellationToken);
             return expense;
         }
 
-        public async Task<IEnumerable<Expense>> All(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Expense>> Query(ExpenseQueryParameters parameters,
+            CancellationToken cancellationToken = default)
         {
-            return await _dbContext
+            var query = _dbContext
                 .Expenses
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
+                .AsNoTracking();
+            
+            if (!String.IsNullOrEmpty(parameters.Description))
+                query = query.Where(e => e.Description.StartsWith(parameters.Description));
+            if (parameters.DateFrom != null)
+                query = query.Where(e => e.EntryDate >= parameters.DateFrom);
+            if (parameters.DateTo != null)
+                query = query.Where(e => e.EntryDate <= parameters.DateTo);
+            
+            return await query.ToListAsync(cancellationToken);
         }
 
         public async Task Save(Expense expense, CancellationToken cancellationToken = default)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Mapster;
 using Microsoft.Extensions.Logging;
 using Split.Application.Base;
 using Split.Application.ViewModels;
@@ -30,7 +29,12 @@ namespace Split.Application.Commands
             
             try
             {
-                request.Adapt(expense);
+                expense.Description = request.Description;
+                expense.Category = request.Category;
+                expense.Value = Money.InEuro(request.Value);
+                expense.ForOwner = request.ForOwner;
+                expense.EntryDate = request.EntryDate;
+                
                 await _repository.Save(expense, cancellationToken);
                 return expense.ToViewModel();
             }

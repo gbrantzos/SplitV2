@@ -24,14 +24,14 @@ namespace Split.Web.Controllers
         }
 
         /// <summary>
-        /// Returns a list of ExpenseItems
+        /// Returns a list of ExpenseItems, based on parameters
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ExpenseListViewModel> Get()
+        public async Task<ExpenseListViewModel> Get([FromQuery] QueryExpenses request)
         {
             _logger.LogDebug("ExpenseController :: Get expenses");
-            var result = await _mediator.Send(new QueryExpenses {IncludeAll = true});
+            var result = await _mediator.Send(request);
             return result.Data;
         }
 

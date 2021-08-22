@@ -3,7 +3,7 @@ using Split.Domain.Models;
 
 namespace Split.Application.ViewModels
 {
-    public static class Mappings
+    public static class ExpenseViewModelExtensions
     {
         public static ExpenseViewModel ToViewModel(this Expense expense)
         {

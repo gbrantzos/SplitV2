@@ -19,7 +19,14 @@ namespace Split.Application.Queries
         protected override async Task<Result<ExpenseListViewModel>> HandleInternal(QueryExpenses request,
             CancellationToken cancellationToken)
         {
-            var data = await _repository.All(cancellationToken);
+            var parameters = new ExpenseQueryParameters
+            {
+                Description = request.Description,
+                DateFrom = request.DateFrom,
+                DateTo = request.DateTo,
+                IncludeAll = request.IncludeAll
+            };
+            var data = await _repository.Query(parameters, cancellationToken);
 
             return new ExpenseListViewModel
             {

@@ -4,18 +4,15 @@ using System.Linq;
 
 namespace Split.Domain.Base
 {
-    public abstract class ValueObject
+    public abstract class ValueObject : IEquatable<ValueObject>
     {
         protected abstract IEnumerable<object> GetAtomicValues();
 
-        public override bool Equals(object obj)
+        public bool Equals(ValueObject other)
         {
-            if (obj == null || obj.GetType() != GetType())
-            {
+            if (other == null)
                 return false;
-            }
-
-            var other = (ValueObject)obj;
+            
             using var thisValues = GetAtomicValues().GetEnumerator();
             using var otherValues = other.GetAtomicValues().GetEnumerator();
             while (thisValues.MoveNext() && otherValues.MoveNext())
@@ -33,6 +30,15 @@ namespace Split.Domain.Base
             }
 
             return !thisValues.MoveNext() && !otherValues.MoveNext();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != GetType())
+            {
+                return false;
+            }
+            return this.Equals(obj as ValueObject);
         }
 
         public override int GetHashCode()

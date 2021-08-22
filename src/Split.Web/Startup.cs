@@ -23,13 +23,13 @@ namespace Split.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Split API", Version = "v1"});
-                
+
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-            
+
             // Add Cors
             services.AddCors(o => o.AddPolicy("AllOrigins", builder =>
             {
@@ -52,7 +52,7 @@ namespace Split.Web
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Split.Web v1");
                 });
             }
-            
+
             // Enable Cors
             app.UseCors("AllOrigins");
 
